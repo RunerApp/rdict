@@ -1,0 +1,43 @@
+# Rust
+/target/
+**/target/
+Cargo.lock
+
+# Swift
+.build/
+.swiftpm/
+*.xcodeproj/
+*.xcframework/
+Package.resolved
+
+# Node
+node_modules/
+*.node
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+*.rdict
+!core/examples/*.rdict
+!compiler/dictionaries/*.rdict
+
+# App bundle
+*.app
+
+# Static lib
+*.a
+
+# Logs
+*.log

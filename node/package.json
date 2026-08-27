@@ -1,0 +1,30 @@
+{
+  "name": "@runer-hq/rdict",
+  "version": "0.1.0",
+  "description": "Node.js binding for Rdict dictionary format",
+  "license": "GPL-3.0",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "rdict.*.node"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "napi build --release --platform --no-js",
+    "build:debug": "napi build",
+    "test": "node test.js"
+  },
+  "napi": {
+    "binaryName": "rdict"
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "^3.8.6"
+  }
+}

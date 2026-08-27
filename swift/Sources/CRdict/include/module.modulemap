@@ -1,0 +1,5 @@
+module CRdict {
+    header "rdict.h"
+    link "rdict"
+    export *
+}

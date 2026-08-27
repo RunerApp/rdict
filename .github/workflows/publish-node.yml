@@ -1,0 +1,69 @@
+name: publish-node
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build ${{ matrix.target }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: darwin-x64
+            runner: macos-15-intel
+          - target: darwin-arm64
+            runner: macos-15
+          - target: linux-x64-gnu
+            runner: ubuntu-latest
+          - target: linux-arm64-gnu
+            runner: ubuntu-24.04-arm
+          - target: win32-x64-msvc
+            runner: windows-latest
+          - target: win32-arm64-msvc
+            runner: windows-11-arm
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.13.0
+      - uses: dtolnay/rust-toolchain@stable
+      - run: npm ci
+        working-directory: node
+      - run: node -e "require('fs').readdirSync('.').filter(name => /^rdict\..+\.node$/.test(name)).forEach(name => require('fs').unlinkSync(name))"
+        working-directory: node
+      - run: npm run build
+        working-directory: node
+      - run: node -e "require('./index.js')"
+        working-directory: node
+      - uses: actions/upload-artifact@v5
+        with:
+          name: native-${{ matrix.target }}
+          path: node/rdict.*.node
+          if-no-files-found: error
+          retention-days: 1
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.13.0
+      - uses: actions/download-artifact@v5
+        with:
+          pattern: native-*
+          path: node
+          merge-multiple: true
+      - run: npm pack --dry-run
+        working-directory: node
+      - run: npm publish
+        working-directory: node
