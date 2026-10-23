@@ -1,0 +1,95 @@
+{
+	"@@locale": "en",
+	"noDict": "No Dictionary Loaded",
+	"@noDict": {
+		"description": "The empty state's title, while no dictionary is open."
+	},
+	"noDictHint": "Open a .rdict file to start browsing",
+	"@noDictHint": {
+		"description": "The empty state's hint, under its title."
+	},
+	"openDict": "Open Dictionary…",
+	"@openDict": {
+		"description": "The empty state's button, which opens the file picker."
+	},
+	"open": "Open",
+	"@open": {
+		"description": "The File menu item, which opens the file picker."
+	},
+	"searchPlaceholder": "Search…",
+	"@searchPlaceholder": {
+		"description": "The search field's placeholder."
+	},
+	"selectWord": "Select a word",
+	"@selectWord": {
+		"description": "The detail pane's placeholder, while no word is selected."
+	},
+	"close": "Delete",
+	"@close": {
+		"description": "The dictionary card's context menu item, which removes that dictionary from the shelf."
+	},
+	"error": "Error",
+	"@error": {
+		"description": "The alert dialog's title."
+	},
+	"related": "Related Words",
+	"@related": {
+		"description": "The card listing a word's synonyms, antonyms and derivatives."
+	},
+	"wordStructure": "Word Structure",
+	"@wordStructure": {
+		"description": "The card listing a word's prefixes, roots and suffixes."
+	},
+	"examples": "Examples",
+	"failedToOpen": "Failed to open: {path}",
+	"@failedToOpen": {
+		"description": "The error alert's message, when a pack fails to open.",
+		"placeholders": {
+			"path": { "type": "String", "example": "eng-zho.rdict" }
+		}
+	},
+	"failedToLoadImage": "Failed to load image",
+	"@failedToLoadImage": {
+		"description": "Shown in place of a media image that fails to decode."
+	},
+	"language": "Language",
+	"@language": {
+		"description": "The menu holding the app's languages."
+	},
+	"morphemePrefix": "prefix",
+	"@morphemePrefix": {
+		"description": "A morpheme of a word's structure: a prefix."
+	},
+	"morphemeSuffix": "suffix",
+	"@morphemeSuffix": {
+		"description": "A morpheme of a word's structure: a suffix."
+	},
+	"morphemeRoot": "root",
+	"@morphemeRoot": {
+		"description": "A morpheme of a word's structure: a root."
+	},
+	"morphemeCombiningForm": "combining form",
+	"@morphemeCombiningForm": {
+		"description": "A morpheme of a word's structure: a combining form."
+	},
+	"morphemeParticle": "particle",
+	"@morphemeParticle": {
+		"description": "A morpheme of a word's structure: a particle."
+	},
+	"morphemeStem": "stem",
+	"@morphemeStem": {
+		"description": "A morpheme of a word's structure: a stem."
+	},
+	"relationSynonym": "SYN",
+	"@relationSynonym": {
+		"description": "A related word's type: a synonym."
+	},
+	"relationAntonym": "ANT",
+	"@relationAntonym": {
+		"description": "A related word's type: an antonym."
+	},
+	"relationDerived": "DER",
+	"@relationDerived": {
+		"description": "A related word's type: a derivative."
+	}
+}

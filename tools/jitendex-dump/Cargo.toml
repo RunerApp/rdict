@@ -1,0 +1,9 @@
+[package]
+name = "jitendex-dump"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+mdict = { path = "/Users/azurefang/Source/js-mdict/rust/crates/mdict" }
+
+[workspace]

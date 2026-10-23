@@ -2,8 +2,8 @@
 //! the API surface for writers and readers; the binary codec lives in
 //! `ast.rs`.
 
-use crate::Error;
 use crate::primitive::Result;
+use crate::Error;
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeSet;
 
@@ -86,6 +86,10 @@ pub struct PackMetadata {
     pub cover: Option<String>,
     pub block_max_uncompressed: u32,
     pub zstd_level: i32,
+    /// Consumer-specific manifest extension (rdict-official-data-plan §8.1):
+    /// a single `runer` object embedded verbatim in `manifest.json`. v0.1
+    /// readers ignore unknown top-level keys, so this rides along safely.
+    pub runer: Option<serde_json::Value>,
 }
 
 impl Default for PackMetadata {
@@ -105,6 +109,7 @@ impl Default for PackMetadata {
             // Level 3 keeps compilation fast; callers can opt into level 19
             // for release builds when the small size reduction is worth it.
             zstd_level: 3,
+            runer: None,
         }
     }
 }
@@ -357,6 +362,7 @@ impl MediaCompression {
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 #[serde(default)]
 pub struct Relation {
+    #[serde(rename = "type")]
     pub type_: Option<String>,
     pub target: String,
 }

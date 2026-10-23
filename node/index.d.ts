@@ -90,7 +90,7 @@ export interface Ety {
 }
 
 export interface Relation {
-  type_: string | null;
+  type: string | null;
   target: string;
 }
 
@@ -146,6 +146,8 @@ export declare class Dictionary {
   listHeadwords(): string[];
   prefix(prefix: string, limit?: number): string[];
   manifest(): Manifest;
+  /** Raw manifest.json bytes as stored in the pack, verbatim (for consumer-specific extensions like the `runer` object). */
+  manifestJson(): any;
   mediaManifest(): MediaManifestEntry[] | null;
   mediaInfo(key: MediaKey): MediaInfo | null;
   readMedia(key: MediaKey): Buffer;

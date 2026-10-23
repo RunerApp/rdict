@@ -43,8 +43,9 @@ char *rdict_lookup(RdictHandle *handle, const char *headword);
 char *rdict_list_headwords(RdictHandle *handle);
 
 /*
- * Case-insensitive prefix search.
- * Returns up to `limit` headwords whose lowercased form starts with `prefix`.
+ * Case-insensitive prefix search with pagination.
+ * Returns up to `limit` headwords after skipping the first `skip`
+ * matches whose lowercased form starts with `prefix`.
  * Headwords are in original case, in sorted order.
  * Returns a JSON string, or NULL on failure.
  * Caller MUST free with rdict_free_string().
@@ -53,7 +54,7 @@ char *rdict_list_headwords(RdictHandle *handle);
  *   {"ok":true,"count":3,"headwords":["apple","apply","applet"]}
  *   {"ok":false,"count":0,"headwords":[],"error":"msg"}
  */
-char *rdict_prefix(RdictHandle *handle, const char *prefix, uint32_t limit);
+char *rdict_prefix(RdictHandle *handle, const char *prefix, uint32_t skip, uint32_t limit);
 
 /*
  * Read a media file's bytes by (kind, hash_hex).

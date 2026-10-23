@@ -71,11 +71,11 @@ public struct DictEntry: Codable {
 }
 
 public struct Relation: Codable {
-    public let type_: String?
+    public let type: String?
     public let target: String
 
     enum CodingKeys: String, CodingKey {
-        case type_ = "type_"
+        case type
         case target
     }
 }

@@ -593,7 +593,7 @@ fn prefix_search_case_insensitive() {
     let reader = write_and_read(&pack);
 
     // Prefix "app" should match apple, Apple, apply (case-insensitive)
-    let results = reader.prefix("app", 20);
+    let results = reader.prefix("app", 0, 20);
     assert_eq!(
         results.len(),
         3,
@@ -606,24 +606,24 @@ fn prefix_search_case_insensitive() {
     assert_eq!(results[2], "apply");
 
     // Prefix "APP" should also match (case-insensitive)
-    let results = reader.prefix("APP", 20);
+    let results = reader.prefix("APP", 0, 20);
     assert_eq!(results.len(), 3);
 
     // Prefix "ban" should match banana
-    let results = reader.prefix("ban", 20);
+    let results = reader.prefix("ban", 0, 20);
     assert_eq!(results.len(), 1);
     assert_eq!(results[0], "banana");
 
     // Prefix "xyz" should match nothing
-    let results = reader.prefix("xyz", 20);
+    let results = reader.prefix("xyz", 0, 20);
     assert!(results.is_empty());
 
     // Limit works
-    let results = reader.prefix("app", 2);
+    let results = reader.prefix("app", 0, 2);
     assert_eq!(results.len(), 2);
 
     // Limit 0 returns empty
-    let results = reader.prefix("app", 0);
+    let results = reader.prefix("app", 0, 0);
     assert!(results.is_empty());
 }
 

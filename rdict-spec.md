@@ -970,6 +970,12 @@ discontinuous expression uses multiple spans in one occurrence; repeated
 occurrences use separate `TargetOccurrence` records. The surface text
 may be an inflected or derived form of the entry headword.
 
+`TextSpan.offset` and `TextSpan.length` are measured in **UTF-8 bytes**
+from the start of `Example.value`. Implementations converting to
+platform string types (e.g. UTF-16 `NSString`/`String` indices) MUST
+translate offsets explicitly; byte offsets of multibyte characters are
+not code-unit positions.
+
 Offsets and lengths count bytes from the start of the raw UTF-8 `value`
 payload, excluding the `str` length prefix and before processing inline
 markup (§6.10). Each count and length MUST be greater than zero, and

@@ -421,6 +421,7 @@ fn main() {
         },
         entries,
         media: Vec::new(),
+        cover: None,
     };
 
     eprint!("Writing {}... ", output.display());

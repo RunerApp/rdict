@@ -13,6 +13,7 @@ struct RdictApp: App {
                 #endif
                 .environmentObject(store)
                 .onAppear {
+                    L10n.restore()
                     if !store.isLoaded {
                         store.restoreLastSession()
                     }

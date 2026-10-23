@@ -1,0 +1,69 @@
+body {font-size: 1.0em; text-align: justify;}
+p {font-size: 1.0em;}
+
+.textStyle0  { font-family: 'Helvetica Neue-Roman', Helvetica, sans-serif; font-size: 250%; line-height: 1;} 
+.textStyle1  { font-family: 'Helvetica Neue-Bold Cond', Helvetica, sans-serif; font-size: 310%; font-weight:bold; } 
+.textStyle2  { font-family: 'Lexus Roman Opti-Regular', sans-serif; font-size: 115%; } 
+.textStyle3  { font-family: 'MinionPro-Bold', serif; font-size: 121%; font-weight:bold; } 
+.textStyle4  { font-family: 'Lexus Roman Opti-Regular', serif; font-size: 121%; } 
+.textStyle5  { font-family: 'Lexus Roman Opti-Regular', serif; font-size: 98%; } 
+.textStyle6  { font-family: 'Helvetica Neue-Bold', sans-serif; font-size: 129%; font-weight:bold; } 
+.textStyle7  { font-family: 'Helvetica Neue-Condensed', sans-serif; font-size: 107%; } 
+.textStyle8  { font-family: 'MinionPro-Medium', serif; font-size: 100%; } 
+.textStyle9  { font-family: 'MinionPro-Bold', serif; font-size: 100%; font-weight:bold; } 
+.textStyle10 { font-family: 'MinionPro-Medium', serif; font-size: 121%; } 
+.textStyle11 { font-family: 'MinionPro-Bold', serif; font-size: 200%; font-weight:bold; } 
+.textStyle12 { font-family: 'MinionPro-Medium', serif; font-size: 143%; } 
+.textStyle13 { font-family: 'MinionPro-Bold', serif; font-size: 143%; font-weight:bold; } 
+.textStyle14 { font-family: 'MinionPro-Medium', serif; font-size: 121%; } 
+.textStyle15 { font-family: 'MinionPro-It', serif; font-size: 121%; font-style:italic; } 
+.textStyle16 { font-family: 'MinionPro-Bold', serif; font-size: 121%; font-weight:bold; } 
+.textStyle17 { font-family: 'MinionPro-It', serif; font-size: 121%; font-style:italic; } 
+.textStyle18 { font-family: 'MinionPro-Bold', serif; font-size: 200%; font-weight:bold; } 
+.textStyle19 { font-family: 'MinionPro-Medium', serif; font-size: 100%; } 
+.textStyle20 { font-family: 'MinionPro-Medium', serif; font-size: 100%; text-decoration:underline; } 
+.textStyle21 { font-family: 'MinionPro-Bold', sans-serif; font-size: 86%; font-weight:bold; color:#00aeef; text-decoration:underline; } 
+.textStyle22 { font-family: 'MinionPro-Bold', serif; font-size: 143%; font-weight:bold; } 
+.textStyle23 { font-family: 'MinionPro-Bold', sans-serif; font-size: 214%; font-weight:bold; color:#00aeef; } 
+.textStyle24 { font-family: 'MinionPro-Bold', sans-serif; font-size: 86%; font-weight:bold; color:#00aeef; } 
+.textStyle25 { font-family: 'Helvetica Neue-Bold', sans-serif; font-size: 50%; font-weight:bold; } 
+.textStyle26 { font-family: 'Hira Min Pro', serif; font-size: 89%; } 
+.textStyle27 { font-family: 'MinionPro-It', serif; font-size: 100%; font-style:italic; } 
+.textStyle28 { font-family: 'MinionPro-Bold', sans-serif; font-size: 171%; font-weight:bold; } 
+.textStyle29 { font-family: 'MinionPro-Medium', serif; font-size: 107%; } 
+.textStyle30 { font-family: 'MinionPro-Bold', sans-serif; font-size: 86%; font-weight:bold; color:#5ebdf2; } 
+.textStyle31 { font-family: 'MinionPro-Medium', serif; font-size: 80%; } 
+.textStyle32 { font-family: 'Hira Min Pro', serif; font-size: 100%; } 
+.textStyle33 { font-family: 'MinionPro-Medium', serif; font-size: 70%; } 
+.textStyle34 { font-family: 'MinionPro-Medium', serif; font-size: 100%; } 
+.textStyle35 { font-family: 'MinionPro-BoldIt', sans-serif; font-size: 86%; font-weight:bold; font-style:italic; color:#00aeef; }
+
+@font-face { font-family: 'MinionPro-Medium'; font-weight: normal; font-style: normal; src:url(../Fonts/MinionPro-Medium.otf); } 
+@font-face { font-family: 'MinionPro-It'; font-weight: normal; font-style: italic; src:url(../Fonts/MinionPro-It.otf); } 
+@font-face { font-family: 'MinionPro-Bold'; font-weight: bold; font-style: normal; src:url(../Fonts/MinionPro-Bold.otf); } 
+@font-face { font-family: 'MinionPro-BoldIt'; font-weight: bold; font-style: italic; src:url(../Fonts/MinionPro-BoldIt.otf); } 
+@font-face { font-family: 'Lexus Roman Opti-Regular'; font-weight: normal; font-style: normal; src:url(../Fonts/LexusRomanOpti-Regular.otf); } 
+@font-face { font-family: 'Helvetica Neue-Bold'; font-weight: bold; font-style: normal; src:url(../Fonts/Helvetica_Neue-Bold.ttf); } 
+@font-face { font-family: 'Hira Min Pro'; font-weight: normal; font-style: normal; src:url(../Fonts/MSMINCHO.TTF); } 
+@font-face { font-family: 'Helvetica Neue-Roman'; font-weight: normal; font-style: normal; src:url(../Fonts/HelveticaNeueLTStd-Roman.OTF); } 
+@font-face { font-family: 'Helvetica Neue-Bold Cond'; font-weight: bold; font-style: normal; src:url(../Fonts/Helvetica_Neue_BoldCond.ttf); } 
+
+.indent  {display: block; margin-bottom: 0em; margin-left: 0; margin-right: 0; margin-top: 0.25em; text-indent: 1.5em}
+.indent1 {display: block; margin-bottom: 0em; margin-left: 0; margin-right: 0; margin-top: 0.25em; text-indent: 0em}
+.indent2 {display: block; margin-bottom: 0em; margin-left: 0; margin-right: 0; margin-top: 1.25em; text-indent: 0em}
+.indent3 {display: block; margin-bottom: 0em; margin-left: 1.5em; margin-right: 0; margin-top: 0.25em; text-indent: 0em}
+.indent4 {display: block; margin-bottom: 0em; margin-left: 0; margin-right: 0; margin-top: 0.25em; text-indent: 0em}
+
+.rev  {display: block; margin-bottom: 0em; margin-left: 1.5em; margin-right: 0; margin-top: 0.25em; text-indent: -1.5em}
+.rev1 {display: block; margin-bottom: 0em; margin-left: 1.5em; margin-right: 0; margin-top: 1.25em; text-indent: -1.5em}
+.rev2 {display: block; margin-bottom: 0em; margin-left: 3em; margin-right: 0; margin-top: 1.25em; text-indent: -1.5em}
+.img {display: block; margin-bottom: 1.5em; margin-left: 0; margin-right: 0; margin-top: 0em; text-indent: 0em}
+.hd{ text-align: center; margin-top: 2em; margin-bottom: 2em; }
+.center {text-align: center;}
+.rgt {text-align: right;}
+blockquote.sgc-1{margin-left: 1.5em; margin-right: 1.5em;}
+a.sgc-1{text-decoration: none;}
+span.suptext { font:80% 'MinionPro-Medium', serif; }
+.sgc-10{text-align: left; margin-top: 1.5em; margin-bottom: 1.5em;}
+
+.idx {display: block; margin-bottom: 0em; margin-left: 1.5em; margin-right: 0; margin-top: 0.25em; text-indent: -1.5em; font-family: 'MinionPro-Medium', serif;}

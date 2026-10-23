@@ -264,7 +264,7 @@ To read media, pass `{ kind, hash }` to `readMedia()` or `extractMedia()`.
 
 ```ts
 {
-  type_: string | null;  // syn / ant / phrase / der / ...
+  type: string | null;   // syn / ant / phrase / der / ...
   target: string;        // target headword string
 }
 ```
@@ -467,7 +467,7 @@ for (const ety of entry.etymologies) {
 if (entry.relations.length > 0) {
   console.log("\nRelations:");
   for (const rel of entry.relations) {
-    console.log(`  ${rel.type_ || "?"}: ${rel.target}`);
+    console.log(`  ${rel.type || "?"}: ${rel.target}`);
   }
 }
 

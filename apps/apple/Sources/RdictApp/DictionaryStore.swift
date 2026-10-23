@@ -25,9 +25,17 @@ struct OpenDictionary: Identifiable, Hashable {
 final class DictionaryStore: ObservableObject {
     @Published var dictionaries: [OpenDictionary] = []
     @Published var selectedDictId: UUID?
-    @Published var headwords: [String] = []
     @Published var filteredHeadwords: [String] = []
+    /// Current page size for the sidebar list; grows by `pageSize`
+    /// when the user scrolls to the bottom (infinite scroll).
+    @Published private(set) var listLimit = 200
+    let pageSize = 200
+    var canLoadMore: Bool { filteredHeadwords.count >= listLimit }
     @Published var currentEntry: DictEntry?
+    @Published var selectedHeadword: String?
+    @Published var lastLookupMs: Double = 0
+    @Published var lastPaintMs: Double = 0
+    @Published var langChangeTrigger: Bool = false
     @Published var errorMessage: String?
     @Published var shouldShowOpenPanel = false
     @Published var searchText = "" {
@@ -167,14 +175,17 @@ final class DictionaryStore: ObservableObject {
 
     private func reloadHeadwords() {
         guard let bridge = currentBridge else {
-            headwords = []
             filteredHeadwords = []
             currentEntry = nil
+            selectedHeadword = nil
             return
         }
-        headwords = bridge.listHeadwords()
-        applyFilter()
+        // No full listHeadwords() (materializes 100k+ Strings per pack —
+        // the sidebar only ever shows a prefix window anyway). Empty
+        // search shows the first 200 headwords via the index.
         currentEntry = nil
+        selectedHeadword = nil
+        applyFilter()
         if let first = filteredHeadwords.first {
             lookup(first)
         }
@@ -182,11 +193,23 @@ final class DictionaryStore: ObservableObject {
 
     func lookup(_ headword: String) {
         guard let bridge = currentBridge else { return }
+        let clickTime = Date()
+        selectedHeadword = headword
+        let t0 = Date()
         do {
             currentEntry = try bridge.lookup(headword)
         } catch {
             errorMessage = error.localizedDescription
             currentEntry = nil
+        }
+        lastLookupMs = Date().timeIntervalSince(t0) * 1000
+        // Measure after SwiftUI finishes the render pass triggered by the
+        // currentEntry change above. Two runloop ticks: first rebuilds the
+        // view tree, second flushes the display.
+        DispatchQueue.main.async { [weak self] in
+            DispatchQueue.main.async {
+                self?.lastPaintMs = Date().timeIntervalSince(clickTime) * 1000
+            }
         }
     }
 
@@ -210,16 +233,48 @@ final class DictionaryStore: ObservableObject {
         lookup(headword)
     }
 
+    /// Grow the sidebar list by one page (called when the user scrolls
+    /// near the bottom). No-op when the last page was short (fewer
+    /// results than requested = end of the list reached).
+    func loadMoreHeadwords() {
+        guard canLoadMore else { return }
+        listLimit += pageSize
+        applyFilter()
+    }
+
+    /// Reset pagination (new search text / dictionary switch).
+    private func resetPagination() {
+        listLimit = pageSize
+    }
+
     private func applyFilter() {
+        resetPaginationIfNeeded()
         if searchText.isEmpty {
-            filteredHeadwords = headwords
+            // First `listLimit` headwords from the index (empty search =
+            // top of the list; no need to materialize the full word list).
+            guard let id = selectedDictId, let bridge = bridges[id] else {
+                filteredHeadwords = []
+                return
+            }
+            filteredHeadwords = bridge.prefix("", limit: listLimit)
         } else {
             // Use prefix search via the index (case-insensitive, binary search).
             guard let id = selectedDictId, let bridge = bridges[id] else {
                 filteredHeadwords = []
                 return
             }
-            filteredHeadwords = bridge.prefix(searchText, limit: 200)
+            filteredHeadwords = bridge.prefix(searchText, limit: listLimit)
+        }
+    }
+
+    /// searchText/searchScope didSet call applyFilter directly; keep the
+    /// page window in sync when a fresh filter run happens.
+    private var lastFilterKey: String = ""
+    private func resetPaginationIfNeeded() {
+        let key = "\(selectedDictId?.uuidString ?? "")|\(searchText)|\(searchScope.rawValue)"
+        if key != lastFilterKey {
+            lastFilterKey = key
+            listLimit = pageSize
         }
     }
 }

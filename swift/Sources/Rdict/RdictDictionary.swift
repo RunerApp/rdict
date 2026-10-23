@@ -33,13 +33,14 @@ public final class RdictDictionary {
         bridge.listHeadwords()
     }
 
-    /// Case-insensitive prefix search.
+    /// Case-insensitive prefix search with pagination.
     /// - Parameters:
     ///   - prefix: The prefix to search for (case-insensitive).
+    ///   - skip: Number of leading matches to skip (default 0).
     ///   - limit: Maximum number of results (default 20, <=0 returns empty).
     /// - Returns: Headwords in original case, in sorted order.
-    public func prefix(_ prefix: String, limit: Int = 20) -> [String] {
-        bridge.prefix(prefix, limit: limit)
+    public func prefix(_ prefix: String, skip: Int = 0, limit: Int = 20) -> [String] {
+        bridge.prefix(prefix, skip: skip, limit: limit)
     }
 
     /// Read media bytes by (kind, hash). Automatically decompresses zstd.

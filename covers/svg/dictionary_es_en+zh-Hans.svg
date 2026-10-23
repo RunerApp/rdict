@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1600" viewBox="0 0 1200 1600">
+<rect width="1200" height="1600" fill="#101418"/>
+<rect x="0" y="0" width="1200" height="497" fill="#6b4226"/><text x="600" y="356" text-anchor="middle" font-family="'Menlo', 'Courier New', monospace" font-weight="bold" font-size="300" fill="#fdfbf7">ES</text>
+<text x="600.0" y="378" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-weight="bold" font-size="330" fill="#fdfbf7" opacity="0.05">Ññ</text>
+<rect x="0" y="497" width="1200" height="497" fill="#14213d"/><text x="600" y="853" text-anchor="middle" font-family="'Menlo', 'Courier New', monospace" font-weight="bold" font-size="300" fill="#fdfbf7">EN</text>
+<text x="600.0" y="875" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-weight="bold" font-size="330" fill="#fdfbf7" opacity="0.05">Aa</text>
+<rect x="0" y="993" width="1200" height="497" fill="#8f1d21"/><text x="600" y="1350" text-anchor="middle" font-family="'Menlo', 'Courier New', monospace" font-weight="bold" font-size="300" fill="#fdfbf7">ZH</text>
+<text x="600.0" y="1372" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-weight="bold" font-size="330" fill="#fdfbf7" opacity="0.05">汉</text>
+<rect x="0" y="1490" width="1200" height="110" fill="#2b2f33"/><text x="600.0" y="1555" text-anchor="middle" font-family="'Helvetica Neue', 'PingFang SC', sans-serif" font-size="27" letter-spacing="2" fill="#fdfbf7">4,948 ENTRIES · Diccionario de español (zh-Hans, en) · rdict 2026-10-16</text>
+</svg>

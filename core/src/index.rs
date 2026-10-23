@@ -474,16 +474,73 @@ impl IndexReader {
         Ok(out)
     }
 
+    /// Collect up to `limit` headwords starting at `start_block`, in
+    /// index order, skipping the first `skip` headwords. Backing for
+    /// the empty-prefix case of `prefix_search`.
+    fn head_words_from_block(&self, start_block: usize, skip: usize, limit: usize) -> Vec<String> {
+        let mut out = Vec::with_capacity(limit.min(64));
+        let mut skipped = 0usize;
+        for block in &self.directory[start_block..] {
+            let body_start = block.first_headword_offset as usize;
+            if body_start < self.body_start as usize {
+                break;
+            }
+            let mut r = BoundedReader::new(&self.bytes[body_start..]);
+            let mut prev: Vec<u8> = Vec::new();
+            for _ in 0..block.block_entry_count {
+                let Ok(shared) = primitive::read_varint(&mut r) else {
+                    return out;
+                };
+                let shared = shared as usize;
+                let Ok(suffix_len) = primitive::read_varint(&mut r) else {
+                    return out;
+                };
+                let suffix_len = suffix_len as usize;
+                let Ok(suffix) = r.read_bytes(suffix_len) else {
+                    return out;
+                };
+                // Skip location data.
+                let _ = primitive::read_varint(&mut r);
+                let _ = primitive::read_varint(&mut r);
+                let _ = primitive::read_varint(&mut r);
+                if shared > prev.len() {
+                    return out;
+                }
+                let mut hw = prev[..shared].to_vec();
+                hw.extend_from_slice(suffix);
+                match String::from_utf8(hw.clone()) {
+                    Ok(s) => {
+                        if skipped < skip {
+                            skipped += 1;
+                        } else {
+                            out.push(s);
+                        }
+                    }
+                    Err(_) => return out,
+                }
+                prev = hw;
+                if out.len() >= limit {
+                    return out;
+                }
+            }
+        }
+        out
+    }
+
     /// Case-insensitive prefix search. Returns up to `limit` headwords
-    /// whose lowercased form starts with `prefix_lower`. The returned
+    /// whose lowercased form starts with `prefix_lower`, skipping the
+    /// first `skip` matches (for pagination). The returned
     /// headwords are in original case, in index order.
-    pub fn prefix_search(&self, prefix: &str, limit: usize) -> Vec<String> {
+    pub fn prefix_search(&self, prefix: &str, skip: usize, limit: usize) -> Vec<String> {
         if limit == 0 || self.directory.is_empty() {
             return Vec::new();
         }
         let prefix_lower = to_lowercase_bytes(prefix);
         if prefix_lower.is_empty() {
-            return Vec::new();
+            // Empty prefix = "top of the list": the first `limit`
+            // headwords in index order after skipping `skip`. Used by
+            // the app's sidebar for the empty-search state.
+            return self.head_words_from_block(0, skip, limit);
         }
 
         // Binary search for the first block whose lowercased first headword
@@ -517,6 +574,7 @@ impl IndexReader {
 
         // Scan forward from start_block, collecting matching headwords.
         let mut results = Vec::with_capacity(limit.min(64));
+        let mut skipped = 0usize;
         for block in &self.directory[start_block..] {
             let body_start = block.first_headword_offset as usize;
             if body_start < self.body_start as usize {
@@ -559,9 +617,13 @@ impl IndexReader {
                 if current_lower.len() >= prefix_lower.len()
                     && &current_lower[..prefix_lower.len()] == prefix_lower.as_slice()
                 {
-                    results.push(current_str.to_string());
-                    if results.len() >= limit {
-                        return results;
+                    if skipped < skip {
+                        skipped += 1;
+                    } else {
+                        results.push(current_str.to_string());
+                        if results.len() >= limit {
+                            return results;
+                        }
                     }
                 } else if current_lower.as_slice() > prefix_lower.as_slice() {
                     // Passed all matches.
@@ -828,6 +890,83 @@ mod tests {
         let idx = build_index(&[], 0).unwrap();
         let r = IndexReader::from_bytes(idx.bytes).unwrap();
         assert_eq!(r.lookup("anything"), None);
+        assert!(r.prefix_search("", 0, 10).is_empty());
+    }
+
+    #[test]
+    fn index_prefix_empty_returns_headwords() {
+        // Empty prefix = top of the list, in index order.
+        let locs: Vec<EntryLocation> = (0..300)
+            .map(|i| make_loc(&format!("hw{:04}", i), 0, i as u64, 1))
+            .collect();
+        let idx = build_index(&locs, 1).unwrap();
+        let r = IndexReader::from_bytes(idx.bytes).unwrap();
+
+        let top = r.prefix_search("", 0, 5);
+        assert_eq!(top, vec!["hw0000", "hw0001", "hw0002", "hw0003", "hw0004"]);
+
+        // Limit spanning a block boundary (256 + 44).
+        let top200 = r.prefix_search("", 0, 200);
+        assert_eq!(top200.len(), 200);
+        assert_eq!(top200[0], "hw0000");
+        assert_eq!(top200[199], "hw0199");
+
+        let top300 = r.prefix_search("", 0, 300);
+        assert_eq!(top300.len(), 300);
+        assert_eq!(top300[299], "hw0299");
+
+        // Limit beyond entry count.
+        let top999 = r.prefix_search("", 0, 999);
+        assert_eq!(top999.len(), 300);
+
+        // Skip: pagination windows over the same list.
+        let page1 = r.prefix_search("", 0, 100);
+        let page2 = r.prefix_search("", 100, 100);
+        let page3 = r.prefix_search("", 200, 100);
+        assert_eq!(page1.len(), 100);
+        assert_eq!(page2.len(), 100);
+        assert_eq!(page3.len(), 100);
+        assert_eq!(page1[0], "hw0000");
+        assert_eq!(page2[0], "hw0100");
+        assert_eq!(page2[99], "hw0199");
+        assert_eq!(page3[99], "hw0299");
+        // Skip spanning a block boundary (256).
+        let page_bc = r.prefix_search("", 250, 10);
+        assert_eq!(page_bc[0], "hw0250");
+        assert_eq!(page_bc[9], "hw0259");
+        // Skip past the end.
+        assert!(r.prefix_search("", 300, 100).is_empty());
+        assert_eq!(r.prefix_search("", 290, 100).len(), 10);
+    }
+
+    #[test]
+    fn index_prefix_skip() {
+        // Prefix search with skip (pagination over matches).
+        let words: Vec<String> = (0..120).map(|i| format!("ab{:03}", i)).collect();
+        let mut words = words;
+        words.push("ac999".to_string());
+        let locs: Vec<EntryLocation> = words
+            .iter()
+            .enumerate()
+            .map(|(i, hw)| make_loc(hw, 0, i as u64, 1))
+            .collect();
+        let idx = build_index(&locs, 1).unwrap();
+        let r = IndexReader::from_bytes(idx.bytes).unwrap();
+
+        let p1 = r.prefix_search("ab", 0, 50);
+        assert_eq!(p1.len(), 50);
+        assert_eq!(p1[0], "ab000");
+        let p2 = r.prefix_search("ab", 50, 50);
+        assert_eq!(p2.len(), 50);
+        assert_eq!(p2[0], "ab050");
+        let p3 = r.prefix_search("ab", 100, 50);
+        assert_eq!(p3.len(), 20);
+        assert_eq!(p3[0], "ab100");
+        assert_eq!(p3[19], "ab119");
+        // Skip past all matches.
+        assert!(r.prefix_search("ab", 120, 50).is_empty());
+        // Non-matching prefix with skip.
+        assert!(r.prefix_search("zz", 0, 50).is_empty());
     }
 
     #[test]

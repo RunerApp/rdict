@@ -299,6 +299,13 @@ impl<R: Read + Seek> RdictReader<R> {
         &self.manifest
     }
 
+    /// The raw `manifest.json` bytes as stored in the pack. Consumers with
+    /// their own manifest extensions (e.g. the `runer` object, plan §8.1)
+    /// need the original JSON rather than the typed `Manifest`.
+    pub fn manifest_json(&mut self) -> Result<Vec<u8>> {
+        self.container.read_member("manifest.json")
+    }
+
     /// Access the string pools.
     pub fn pools(&self) -> &StringPools {
         &self.pools
@@ -469,8 +476,8 @@ impl<R: Read + Seek> RdictReader<R> {
     /// Case-insensitive prefix search. Returns up to `limit` headwords
     /// whose lowercased form starts with `prefix`. Headwords are in
     /// original case, in index (sorted) order. `limit <= 0` returns empty.
-    pub fn prefix(&self, prefix: &str, limit: usize) -> Vec<String> {
-        self.index.prefix_search(prefix, limit)
+    pub fn prefix(&self, prefix: &str, skip: usize, limit: usize) -> Vec<String> {
+        self.index.prefix_search(prefix, skip, limit)
     }
 }
 

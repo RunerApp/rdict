@@ -124,7 +124,7 @@ const { Dictionary: NativeDictionary } = loadNative();
 
 /**
  * @typedef {Object} Relation
- * @property {string|null} type_
+ * @property {string|null} type - Relation type (syn / ant / phrase / der / ...)
  * @property {string} target
  */
 
@@ -201,11 +201,12 @@ class RdictDictionary {
   /**
    * Case-insensitive prefix search.
    * @param {string} prefix
+   * @param {number} [skip=0] - Skip the first N results (pagination)
    * @param {number} [limit=20] - Max results (default 20, <=0 returns [])
    * @returns {string[]} Headwords in original case, in sorted order
    */
-  prefix(prefix, limit) {
-    return this._dict.prefix(prefix, limit);
+  prefix(prefix, skip, limit) {
+    return this._dict.prefix(prefix, skip, limit);
   }
 
   /**
@@ -214,6 +215,16 @@ class RdictDictionary {
    */
   manifest() {
     return JSON.parse(this._dict.manifest());
+  }
+
+  /**
+   * Get the raw manifest.json as stored in the pack, verbatim.
+   * Consumers with their own manifest extensions (e.g. the `runer`
+   * object) need the original JSON rather than the typed view.
+   * @returns {any}
+   */
+  manifestJson() {
+    return JSON.parse(this._dict.manifestJson());
   }
 
   /**

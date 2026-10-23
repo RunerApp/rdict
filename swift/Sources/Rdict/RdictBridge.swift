@@ -58,10 +58,11 @@ final class RdictBridge {
         return resp.headwords
     }
 
-    /// Case-insensitive prefix search. Returns up to `limit` headwords.
-    func prefix(_ prefix: String, limit: Int = 20) -> [String] {
+    /// Case-insensitive prefix search with pagination. Returns up to
+    /// `limit` headwords after skipping the first `skip` matches.
+    func prefix(_ prefix: String, skip: Int = 0, limit: Int = 20) -> [String] {
         guard let h = handle else { return [] }
-        guard let cJson = prefix.withCString({ rdict_prefix(h, $0, UInt32(limit)) })
+        guard let cJson = prefix.withCString({ rdict_prefix(h, $0, UInt32(skip), UInt32(limit)) })
         else { return [] }
         defer { rdict_free_string(cJson) }
 

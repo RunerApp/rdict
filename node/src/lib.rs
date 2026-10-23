@@ -58,15 +58,22 @@ impl Dictionary {
     }
 
     /// Case-insensitive prefix search. Returns up to `limit` headwords
-    /// whose lowercased form starts with `prefix`. `limit <= 0` returns empty.
+    /// whose lowercased form starts with `prefix`, skipping the first
+    /// `skip` results (pagination). `limit <= 0` returns empty.
     #[napi]
-    pub fn prefix(&self, prefix: String, limit: Option<u32>) -> napi::Result<Vec<String>> {
+    pub fn prefix(
+        &self,
+        prefix: String,
+        skip: Option<u32>,
+        limit: Option<u32>,
+    ) -> napi::Result<Vec<String>> {
         let reader = self
             .reader
             .lock()
             .map_err(|e| napi::Error::from_reason(format!("Lock: {e}")))?;
+        let sk = skip.unwrap_or(0) as usize;
         let lim = limit.unwrap_or(20) as usize;
-        Ok(reader.prefix(&prefix, lim))
+        Ok(reader.prefix(&prefix, sk, lim))
     }
 
     /// Get manifest info (name, languages, version, entry count) as JSON.
@@ -88,6 +95,21 @@ impl Dictionary {
         });
         serde_json::to_string_pretty(&json)
             .map_err(|e| napi::Error::from_reason(format!("Serialize: {e}")))
+    }
+
+    /// Get the raw manifest.json bytes as stored in the pack, verbatim.
+    /// Consumers with their own manifest extensions (e.g. the `runer`
+    /// object) need the original JSON rather than the typed view.
+    #[napi]
+    pub fn manifest_json(&self) -> napi::Result<String> {
+        let mut reader = self
+            .reader
+            .lock()
+            .map_err(|e| napi::Error::from_reason(format!("Lock: {e}")))?;
+        reader
+            .manifest_json()
+            .map(|b| String::from_utf8(b).unwrap_or_default())
+            .map_err(|e| napi::Error::from_reason(format!("Read manifest: {e}")))
     }
 
     /// Get the media manifest as a JSON string, or null if no media.

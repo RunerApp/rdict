@@ -24,6 +24,10 @@ pub struct Manifest {
     pub tag_table: Option<Vec<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub relation_type_table: Option<Vec<String>>,
+    /// Consumer-specific extension object (rdict-official-data-plan §8.1),
+    /// embedded verbatim as a top-level `runer` key in manifest.json.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub runer: Option<serde_json::Value>,
     pub data: DataJson,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub morph: Option<MorphJson>,
@@ -143,6 +147,7 @@ impl Manifest {
             form_kind_table: pool_table(PoolKind::FormKind),
             tag_table: pool_table(PoolKind::Tag),
             relation_type_table: pool_table(PoolKind::RelationType),
+            runer: m.runer.clone(),
             data: DataJson {
                 block_max_uncompressed: m.block_max_uncompressed,
                 compression: "zstd".into(),
@@ -234,6 +239,7 @@ impl From<&Manifest> for PackMetadata {
             cover: m.pack.cover.clone(),
             block_max_uncompressed: m.data.block_max_uncompressed,
             zstd_level: m.data.zstd_level,
+            runer: m.runer.clone(),
         }
     }
 }

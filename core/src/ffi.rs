@@ -5,7 +5,7 @@
 //! `rdict_free_string`. Passing a returned pointer to any function other
 //! than `rdict_free_string` is undefined behavior.
 
-use crate::reader::{LookupEntry, RdictReader};
+use crate::reader::{LookupEntry, RdictReader, ReadMode};
 use serde::Serialize;
 use std::ffi::{CStr, CString};
 use std::fs::File;
@@ -80,7 +80,11 @@ pub unsafe extern "C" fn rdict_open(path: *const c_char) -> *mut RdictHandle {
     let Some(path_str) = cstr_to_str(path) else {
         return ptr::null_mut();
     };
-    match RdictReader::open(path_str) {
+    // Auto: eager-preload only when the pack's text size is under
+    // DEFAULT_EAGER_TEXT_LIMIT (10 MiB), lazy otherwise. (Hard-coded
+    // Eager made 6 open packs balloon to ~600 MB — every entry tree
+    // fully materialized at open.)
+    match RdictReader::open_with_mode(path_str, ReadMode::default()) {
         Ok(reader) => Box::into_raw(Box::new(RdictHandle { reader })),
         Err(_) => ptr::null_mut(),
     }
@@ -176,7 +180,8 @@ pub unsafe extern "C" fn rdict_list_headwords(handle: *mut RdictHandle) -> *mut 
     json_to_cstring(&response)
 }
 
-/// Case-insensitive prefix search. Returns up to `limit` headwords as a
+/// Case-insensitive prefix search with pagination. Returns up to
+/// `limit` headwords after skipping the first `skip` matches, as a
 /// JSON string (caller must free), or NULL on failure.
 ///
 /// JSON format:
@@ -192,6 +197,7 @@ pub unsafe extern "C" fn rdict_list_headwords(handle: *mut RdictHandle) -> *mut 
 pub unsafe extern "C" fn rdict_prefix(
     handle: *mut RdictHandle,
     prefix: *const c_char,
+    skip: u32,
     limit: u32,
 ) -> *mut c_char {
     if handle.is_null() {
@@ -201,7 +207,9 @@ pub unsafe extern "C" fn rdict_prefix(
         return ptr::null_mut();
     };
     let handle = unsafe { &*handle };
-    let headwords = handle.reader.prefix(prefix_str, limit as usize);
+    let headwords = handle
+        .reader
+        .prefix(prefix_str, skip as usize, limit as usize);
     let response = PrefixResponse {
         ok: true,
         count: headwords.len() as u32,

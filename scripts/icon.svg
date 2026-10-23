@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+<defs><radialGradient id="paper" cx="50%" cy="40%" r="78%"><stop offset="0" stop-color="#fdfbf6"/><stop offset="1" stop-color="#eee7d7"/></radialGradient><filter id="blur-s" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="10"/></filter><filter id="blur-m" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="18"/></filter>
+<linearGradient id="leather0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b23c3e"/><stop offset="1" stop-color="#7c2a2c"/></linearGradient>
+<linearGradient id="leather1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a5da0"/><stop offset="1" stop-color="#27396a"/></linearGradient>
+<linearGradient id="leather2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c68e36"/><stop offset="1" stop-color="#8a6220"/></linearGradient>
+<linearGradient id="leather3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3d7f5c"/><stop offset="1" stop-color="#29573d"/></linearGradient>
+<linearGradient id="leather4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#74509c"/><stop offset="1" stop-color="#4e3268"/></linearGradient>
+</defs>
+<rect width="1024" height="1024" rx="229" fill="url(#paper)"/>
+<g transform="translate(102,102)">
+<ellipse cx="410" cy="667" rx="304" ry="16" fill="#2a2015" opacity="0.20" filter="url(#blur-m)"/>
+<path d="M122,251 a6,6 0 0 1 6,-6 h103 a6,6 0 0 1 6,6 v404 h-115 z" fill="url(#leather0)"/>
+<rect x="122" y="245" width="4" height="410" fill="#ffffff" opacity="0.16"/>
+<rect x="232" y="245" width="5" height="410" fill="#000000" opacity="0.18"/>
+<rect x="122" y="290" width="115" height="3" fill="#e2c06e"/>
+<rect x="122" y="295" width="115" height="2" fill="#b08c42"/>
+<rect x="122" y="610" width="115" height="3" fill="#e2c06e"/>
+<rect x="122" y="615" width="115" height="2" fill="#b08c42"/>
+<text x="180" y="522" text-anchor="middle" font-family="-apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif" font-weight="600" font-size="123" fill="#000" opacity="0.32" filter="url(#blur-s)">r</text>
+<text x="180" y="520" text-anchor="middle" font-family="-apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif" font-weight="600" font-size="123" fill="#fffdf8">r</text>
+<path d="M237,170 a6,6 0 0 1 6,-6 h103 a6,6 0 0 1 6,6 v485 h-115 z" fill="url(#leather1)"/>
+<rect x="237" y="164" width="4" height="491" fill="#ffffff" opacity="0.16"/>
+<rect x="347" y="164" width="5" height="491" fill="#000000" opacity="0.18"/>
+<rect x="237" y="208" width="115" height="3" fill="#e2c06e"/>
+<rect x="237" y="213" width="115" height="2" fill="#b08c42"/>
+<rect x="237" y="610" width="115" height="3" fill="#e2c06e"/>
+<rect x="237" y="615" width="115" height="2" fill="#b08c42"/>
+<text x="296" y="522" text-anchor="middle" font-family="-apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif" font-weight="600" font-size="123" fill="#000" opacity="0.32" filter="url(#blur-s)">d</text>
+<text x="294" y="520" text-anchor="middle" font-family="-apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif" font-weight="600" font-size="123" fill="#fffdf8">d</text>
+<path d="M352,292 a6,6 0 0 1 6,-6 h103 a6,6 0 0 1 6,6 v363 h-115 z" fill="url(#leather2)"/>
+<rect x="352" y="286" width="4" height="369" fill="#ffffff" opacity="0.16"/>
+<rect x="462" y="286" width="5" height="369" fill="#000000" opacity="0.18"/>
+<rect x="352" y="330" width="115" height="3" fill="#e2c06e"/>
+<rect x="352" y="335" width="115" height="2" fill="#b08c42"/>
+<rect x="352" y="610" width="115" height="3" fill="#e2c06e"/>
+<rect x="352" y="615" width="115" height="2" fill="#b08c42"/>
+<text x="410" y="522" text-anchor="middle" font-family="-apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif" font-weight="600" font-size="123" fill="#000" opacity="0.32" filter="url(#blur-s)">i</text>
+<text x="410" y="520" text-anchor="middle" font-family="-apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif" font-weight="600" font-size="123" fill="#fffdf8">i</text>
+<path d="M467,120 a6,6 0 0 1 6,-6 h103 a6,6 0 0 1 6,6 v535 h-115 z" fill="url(#leather3)"/>
+<rect x="467" y="114" width="4" height="541" fill="#ffffff" opacity="0.16"/>
+<rect x="577" y="114" width="5" height="541" fill="#000000" opacity="0.18"/>
+<rect x="467" y="158" width="115" height="3" fill="#e2c06e"/>
+<rect x="467" y="163" width="115" height="2" fill="#b08c42"/>
+<rect x="467" y="610" width="115" height="3" fill="#e2c06e"/>
+<rect x="467" y="615" width="115" height="2" fill="#b08c42"/>
+<text x="526" y="522" text-anchor="middle" font-family="-apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif" font-weight="600" font-size="123" fill="#000" opacity="0.32" filter="url(#blur-s)">c</text>
+<text x="524" y="520" text-anchor="middle" font-family="-apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif" font-weight="600" font-size="123" fill="#fffdf8">c</text>
+<path d="M582,211 a6,6 0 0 1 6,-6 h103 a6,6 0 0 1 6,6 v444 h-115 z" fill="url(#leather4)"/>
+<rect x="582" y="205" width="4" height="450" fill="#ffffff" opacity="0.16"/>
+<rect x="692" y="205" width="5" height="450" fill="#000000" opacity="0.18"/>
+<rect x="582" y="250" width="115" height="3" fill="#e2c06e"/>
+<rect x="582" y="255" width="115" height="2" fill="#b08c42"/>
+<rect x="582" y="610" width="115" height="3" fill="#e2c06e"/>
+<rect x="582" y="615" width="115" height="2" fill="#b08c42"/>
+<text x="640" y="522" text-anchor="middle" font-family="-apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif" font-weight="600" font-size="123" fill="#000" opacity="0.32" filter="url(#blur-s)">t</text>
+<text x="640" y="520" text-anchor="middle" font-family="-apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif" font-weight="600" font-size="123" fill="#fffdf8">t</text>
+</g>
+<rect x="103" y="103" width="818" height="818" rx="229" fill="none" stroke="#4a3a28" stroke-width="4" opacity="0.85"/>
+<rect x="105" y="105" width="814" height="814" rx="229" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.35"/>
+</svg>

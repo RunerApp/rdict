@@ -1,0 +1,239 @@
+# rdict pack registry — single source of truth for per-language pack
+# metadata, shared by db_to_rdict.rs (compiler) and covers/make_covers.py.
+#
+# Adding a new language: add one [languages.X] block + one
+# [[packs]] entry per pack you ship. No code changes needed.
+
+[languages.en]
+name = "English"
+default_targets = ["zh-Hans", "es-ES"]
+
+[languages.es]
+name = "Spanish"
+default_targets = ["zh-Hans", "en"]
+
+[languages.ja]
+name = "Japanese"
+default_targets = ["zh-Hans", "en"]
+
+[languages.fr]
+name = "French"
+default_targets = ["zh-Hans", "en"]
+
+[languages.ko]
+name = "Korean"
+default_targets = ["zh-Hans", "en"]
+
+[languages.de]
+name = "German"
+default_targets = ["zh-Hans", "en"]
+
+[languages.pt]
+name = "Portuguese"
+default_targets = ["zh-Hans", "en"]
+
+[languages.it]
+name = "Italian"
+default_targets = ["zh-Hans", "en"]
+
+# ── packs ────────────────────────────────────────────────────────────
+# targets = [] means monolingual. key = "<src>|<sorted targets>" as the
+# compiler matches on (same as the old Rust match arms).
+
+[[packs]]
+combo = "en|"
+id = "en-en"
+name = "English Dictionary (Monolingual)"
+description = "Monolingual English learner's dictionary"
+
+[[packs]]
+combo = "en|zh-Hans"
+id = "en-zh"
+name = "English–Chinese Dictionary (英汉词典)"
+description = "English dictionary with Simplified Chinese translations"
+
+[[packs]]
+combo = "en|es-ES"
+id = "en-es"
+name = "English–Spanish Dictionary (Diccionario inglés-español)"
+description = "English dictionary with Spanish translations"
+
+[[packs]]
+combo = "en|es-ES,zh-Hans"
+id = "en-zh-es"
+name = "English Dictionary (zh-Hans, es-ES)"
+description = "English dictionary with zh-Hans and es-ES translations"
+
+[[packs]]
+combo = "es|"
+id = "es-es"
+name = "Diccionario de español (monolingüe)"
+description = "Monolingual Spanish learner's dictionary"
+
+[[packs]]
+combo = "es|en"
+id = "es-en"
+name = "Diccionario español–inglés (Spanish–English Dictionary)"
+description = "Spanish learner's dictionary with English translations"
+
+[[packs]]
+combo = "es|zh-Hans"
+id = "es-zh"
+name = "Diccionario español–chino (西汉词典)"
+description = "Spanish learner's dictionary with Simplified Chinese translations"
+
+[[packs]]
+combo = "es|en,zh-Hans"
+id = "es-zh-en"
+name = "Diccionario de español (zh-Hans, en)"
+description = "Spanish learner's dictionary with zh-Hans and English translations"
+
+[[packs]]
+combo = "ja|"
+id = "ja-ja"
+name = "国語辞典 (Japanese Dictionary)"
+description = "Monolingual Japanese learner's dictionary (JLPT N5-N1)"
+
+[[packs]]
+combo = "ja|zh-Hans"
+id = "ja-zh"
+name = "日中辞典 (Japanese–Chinese Dictionary)"
+description = "Japanese (JLPT N5-N1) dictionary with Simplified Chinese translations"
+
+[[packs]]
+combo = "ja|en"
+id = "ja-en"
+name = "Japanese–English Dictionary (日英辞典)"
+description = "Japanese (JLPT N5-N1) dictionary with English translations"
+
+[[packs]]
+combo = "ja|es-ES"
+id = "ja-es"
+name = "Diccionario japonés–español (日西辞典)"
+description = "Japanese (JLPT N5-N1) dictionary with Spanish translations"
+
+[[packs]]
+combo = "ja|en,zh-Hans"
+id = "ja-zh-en"
+name = "日中英辞典 (Japanese–Chinese–English Dictionary)"
+description = "Japanese learner's dictionary with Simplified Chinese and English translations"
+
+[[packs]]
+combo = "fr|"
+id = "fr-fr"
+name = "Dictionnaire de français (monolingue)"
+description = "Monolingual French learner's dictionary (Cobb frequency lists)"
+
+[[packs]]
+combo = "fr|zh-Hans"
+id = "fr-zh"
+name = "法汉词典 (French–Chinese Dictionary)"
+description = "French (Cobb frequency lists) dictionary with Simplified Chinese translations"
+
+[[packs]]
+combo = "fr|en"
+id = "fr-en"
+name = "French–English Dictionary (法英词典)"
+description = "French (Cobb frequency lists) dictionary with English translations"
+
+[[packs]]
+combo = "fr|en,zh-Hans"
+id = "fr-zh-en"
+name = "法汉英词典 (French–Chinese–English Dictionary)"
+description = "French (Cobb frequency lists) dictionary with zh-Hans and en translations"
+
+[[packs]]
+combo = "ko|"
+id = "ko-ko"
+name = "한국어 학습 사전 (Korean Dictionary, monolingual)"
+description = "Monolingual Korean learner's dictionary (NIKL learner vocabulary lists)"
+
+[[packs]]
+combo = "ko|zh-Hans"
+id = "ko-zh"
+name = "韩中词典 (Korean–Chinese Dictionary)"
+description = "Korean (NIKL learner vocabulary lists) dictionary with Simplified Chinese translations"
+
+[[packs]]
+combo = "ko|en"
+id = "ko-en"
+name = "Korean–English Dictionary (한영 사전)"
+description = "Korean (NIKL learner vocabulary lists) dictionary with English translations"
+
+[[packs]]
+combo = "ko|en,zh-Hans"
+id = "ko-zh-en"
+name = "韩中英词典 (Korean–Chinese–English Dictionary)"
+description = "Korean (NIKL learner vocabulary lists) dictionary with zh-Hans and en translations"
+
+[[packs]]
+combo = "de|"
+id = "de-de"
+name = "Deutsches Wörterbuch (einsprachig)"
+description = "Monolingual German learner's dictionary (fdog top 5000)"
+
+[[packs]]
+combo = "de|zh-Hans"
+id = "de-zh"
+name = "德汉词典 (German–Chinese Dictionary)"
+description = "German (fdog top 5000) dictionary with Simplified Chinese translations"
+
+[[packs]]
+combo = "de|en"
+id = "de-en"
+name = "German–English Dictionary (Deutsch–Englisch)"
+description = "German (fdog top 5000) dictionary with English translations"
+
+[[packs]]
+combo = "de|en,zh-Hans"
+id = "de-zh-en"
+name = "德汉英词典 (German–Chinese–English Dictionary)"
+description = "German (fdog top 5000) dictionary with zh-Hans and en translations"
+
+[[packs]]
+combo = "pt|"
+id = "pt-pt"
+name = "Dicionário de português (monolingue)"
+description = "Monolingual Portuguese learner's dictionary (fdop top 5000)"
+
+[[packs]]
+combo = "pt|zh-Hans"
+id = "pt-zh"
+name = "葡汉词典 (Portuguese–Chinese Dictionary)"
+description = "Portuguese (fdop top 5000) dictionary with Simplified Chinese translations"
+
+[[packs]]
+combo = "pt|en"
+id = "pt-en"
+name = "Portuguese–English Dictionary (Português–Inglês)"
+description = "Portuguese (fdop top 5000) dictionary with English translations"
+
+[[packs]]
+combo = "pt|en,zh-Hans"
+id = "pt-zh-en"
+name = "葡汉英词典 (Portuguese–Chinese–English Dictionary)"
+description = "Portuguese (fdop top 5000) dictionary with zh-Hans and en translations"
+
+[[packs]]
+combo = "it|"
+id = "it-it"
+name = "Dizionario di italiano (monolingue)"
+description = "Monolingual Italian learner's dictionary (ifdfl top 10000)"
+
+[[packs]]
+combo = "it|zh-Hans"
+id = "it-zh"
+name = "意汉词典 (Italian–Chinese Dictionary)"
+description = "Italian (ifdfl top 10000) dictionary with Simplified Chinese translations"
+
+[[packs]]
+combo = "it|en"
+id = "it-en"
+name = "Italian–English Dictionary (Italiano–Inglese)"
+description = "Italian (ifdfl top 10000) dictionary with English translations"
+
+[[packs]]
+combo = "it|en,zh-Hans"
+id = "it-zh-en"
+name = "意汉英词典 (Italian–Chinese–English Dictionary)"
+description = "Italian (ifdfl top 10000) dictionary with zh-Hans and en translations"
